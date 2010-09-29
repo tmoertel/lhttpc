@@ -32,7 +32,6 @@
 %%% The gen_server is supposed to be started by a supervisor, which is
 %%% normally {@link lhttpc_sup}.
 %%% @end
-%%% @type boolean() = bool().
 -module(lhttpc_manager).
 
 -export([
@@ -53,9 +52,9 @@
 -behaviour(gen_server).
 
 -record(httpc_man, {
-        destinations = dict:new(),
-        sockets = dict:new(),
-        timeout = 300000 :: non_neg_integer()
+        destinations = dict:new() :: dict(),
+        sockets = dict:new()      :: dict(),
+        timeout = 300000          :: non_neg_integer()
     }).
 
 %% @spec () -> Count

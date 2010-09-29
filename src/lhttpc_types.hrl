@@ -42,6 +42,3 @@
 -type socket_options() :: [{atom(), term()} | atom()].
 
 -type window_size() :: non_neg_integer() | infinity.
-
-%% In R13B bool() is now called boolean()
--type boolean() :: bool().
