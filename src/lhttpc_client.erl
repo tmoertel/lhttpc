@@ -30,7 +30,6 @@
 %%% This module implements the HTTP request handling. This should normally
 %%% not be called directly since it should be spawned by the lhttpc module.
 %%% @end
-%%% @type boolean() = bool().
 %%% @type iolist() = [] | binary() | [char() | binary() | iolist()].
 -module(lhttpc_client).
 
@@ -39,23 +38,23 @@
 -include("lhttpc_types.hrl").
 
 -record(client_state, {
-        host :: string(),
-        port = 80 :: integer(),
-        ssl = false :: true | false,
-        method :: string(),
-        request :: iolist(),
-        request_headers :: headers(),
-        socket,
-        connect_timeout = infinity :: timeout(),
-        connect_options = [] :: [any()],
-        attempts :: integer(),
-        requester :: pid(),
-        partial_upload = false :: true | false,
-        chunked_upload = false :: true | false,
-        upload_window :: non_neg_integer() | infinity,
-        partial_download = false :: true | false,
-        download_window = infinity :: timeout(),
-        part_size :: non_neg_integer() | infinity
+        host                        :: string(),
+        port = 80                   :: integer(),
+        ssl = false                 :: boolean(),
+        method                      :: string(),
+        request                     :: iolist(),
+        request_headers             :: headers(),
+        socket                      :: port(),
+        connect_timeout = infinity  :: timeout(),
+        connect_options = []        :: [any()],
+        attempts                    :: integer(),
+        requester                   :: pid(),
+        partial_upload = false      :: boolean(),
+        chunked_upload = false      :: boolean(),
+        upload_window               :: non_neg_integer() | infinity,
+        partial_download = false    :: boolean(),
+        download_window = infinity  :: timeout(),
+        part_size                   :: non_neg_integer() | infinity
         %% in case of infinity we read whatever data we can get from
         %% the wire at that point or in case of chunked one chunk
     }).

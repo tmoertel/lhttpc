@@ -1,5 +1,9 @@
 ebin/
 
+ebin_eclipse/
+.project
+.settings
+
 doc/edoc-info
 doc/*.html
 doc/*.png
