@@ -49,6 +49,7 @@
 
 -type result() :: {ok, {{pos_integer(), string()}, headers(), binary()}} |
     {error, atom()}.
+-export_type([result/0]).
 
 %% @hidden
 -spec start(normal | {takeover, node()} | {failover, node()}, any()) ->
