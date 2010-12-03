@@ -89,7 +89,7 @@ request(From, Host, Port, Ssl, Path, Method, Hdrs, Body, Options) ->
     end,
     case Result of
         {response, _, {ok, {no_return, _}}} -> ok;
-        _Else                               -> From ! Result
+        _Else                               -> From ! Result, ok
     end,
     % Don't send back {'EXIT', self(), normal} if the process
     % calling us is trapping exits
@@ -187,14 +187,14 @@ send_request(State) ->
                 not State#client_state.partial_upload -> read_response(State)
             end;
         {error, closed} ->
-            lhttpc_sock:close(Socket, Ssl),
+            _ = lhttpc_sock:close(Socket, Ssl),
             NewState = State#client_state{
                 socket = undefined,
                 attempts = State#client_state.attempts - 1
             },
             send_request(NewState);
         {error, Reason} ->
-            lhttpc_sock:close(Socket, Ssl),
+            _ = lhttpc_sock:close(Socket, Ssl),
             erlang:error(Reason)
     end.
 
@@ -242,11 +242,11 @@ encode_body_part(#client_state{chunked_upload = false}, Data) ->
 check_send_result(_State, ok) ->
     ok;
 check_send_result(#client_state{socket = Sock, ssl = Ssl}, {error, Reason}) ->
-    lhttpc_sock:close(Sock, Ssl),
+    _ = lhttpc_sock:close(Sock, Ssl),
     throw(Reason).
 
 read_response(#client_state{socket = Socket, ssl = Ssl} = State) ->
-    lhttpc_sock:setopts(Socket, [{packet, http}], Ssl),
+    ok = lhttpc_sock:setopts(Socket, [{packet, http}], Ssl),
     read_response(State, nil, {nil, nil}, []).
 
 read_response(State, Vsn, {StatusCode, _} = Status, Hdrs) ->
@@ -268,7 +268,7 @@ read_response(State, Vsn, {StatusCode, _} = Status, Hdrs) ->
             % status responses MAY be ignored by a user agent.
             read_response(State, nil, {nil, nil}, []);
         {ok, http_eoh} ->
-            lhttpc_sock:setopts(Socket, [{packet, raw}], Ssl),
+            ok = lhttpc_sock:setopts(Socket, [{packet, raw}], Ssl),
             Response = handle_response_body(State, Vsn, Status, Hdrs),
             NewHdrs = element(2, Response),
             ReqHdrs = State#client_state.request_headers,
@@ -280,7 +280,7 @@ read_response(State, Vsn, {StatusCode, _} = Status, Hdrs) ->
             % the request on the wire or the server has some issues and is
             % closing connections without sending responses.
             % If this the first attempt to send the request, we will try again.
-            lhttpc_sock:close(Socket, Ssl),
+            _ = lhttpc_sock:close(Socket, Ssl),
             NewState = State#client_state{
                 socket = undefined,
                 attempts = State#client_state.attempts - 1
@@ -441,7 +441,7 @@ read_partial_chunked_body(State, Hdrs, Window, BufferSize, Buffer, 0) ->
     PartSize = State#client_state.part_size,
     case read_chunk_size(Socket, Ssl) of
         0 ->
-            reply_chunked_part(State, Buffer, Window),
+            _NewWindow = reply_chunked_part(State, Buffer, Window),
             {Trailers, NewHdrs} = read_trailers(Socket, Ssl, [], Hdrs),
             reply_end_of_body(State, Trailers, NewHdrs);
         ChunkSize when PartSize =:= infinity ->
@@ -476,7 +476,7 @@ read_partial_chunked_body(State, Hdrs, Window, BufferSize, Buffer, RemSize) ->
     end.
 
 read_chunk_size(Socket, Ssl) ->
-    lhttpc_sock:setopts(Socket, [{packet, line}], Ssl),
+    ok = lhttpc_sock:setopts(Socket, [{packet, line}], Ssl),
     case lhttpc_sock:recv(Socket, Ssl) of
         {ok, ChunkSizeExt} ->
             chunk_size(ChunkSizeExt);
@@ -529,7 +529,7 @@ chunk_size(<<Char, Binary/binary>>, Chars) ->
 read_partial_chunk(Socket, Ssl, ChunkSize, ChunkSize) ->
     {read_chunk(Socket, Ssl, ChunkSize), 0};
 read_partial_chunk(Socket, Ssl, Size, ChunkSize) ->
-    lhttpc_sock:setopts(Socket, [{packet, raw}], Ssl),
+    ok = lhttpc_sock:setopts(Socket, [{packet, raw}], Ssl),
     case lhttpc_sock:recv(Socket, Size, Ssl) of
         {ok, Chunk} ->
             {Chunk, ChunkSize - Size};
@@ -538,7 +538,7 @@ read_partial_chunk(Socket, Ssl, Size, ChunkSize) ->
     end.
 
 read_chunk(Socket, Ssl, Size) ->
-    lhttpc_sock:setopts(Socket, [{packet, raw}], Ssl),
+    ok = lhttpc_sock:setopts(Socket, [{packet, raw}], Ssl),
     case lhttpc_sock:recv(Socket, Size + 2, Ssl) of
         {ok, <<Chunk:Size/binary, "\r\n">>} ->
             Chunk;
@@ -549,7 +549,7 @@ read_chunk(Socket, Ssl, Size) ->
     end.
 
 read_trailers(Socket, Ssl, Trailers, Hdrs) ->
-    lhttpc_sock:setopts(Socket, [{packet, httph}], Ssl),
+    ok = lhttpc_sock:setopts(Socket, [{packet, httph}], Ssl),
     case lhttpc_sock:recv(Socket, Ssl) of
         {ok, http_eoh} ->
             {Trailers, Hdrs};
@@ -629,7 +629,7 @@ maybe_close_socket(Socket, Ssl, {1, Minor}, ReqHdrs, RespHdrs) when Minor >= 1->
     ServerConnection = ?CONNECTION_HDR(RespHdrs, "keep-alive"),
     if
         ClientConnection =:= "close"; ServerConnection =:= "close" ->
-            lhttpc_sock:close(Socket, Ssl),
+            _ = lhttpc_sock:close(Socket, Ssl),
             undefined;
         ClientConnection =/= "close", ServerConnection =/= "close" ->
             Socket
@@ -639,7 +639,7 @@ maybe_close_socket(Socket, Ssl, _, ReqHdrs, RespHdrs) ->
     ServerConnection = ?CONNECTION_HDR(RespHdrs, "close"),
     if
         ClientConnection =:= "close"; ServerConnection =/= "keep-alive" ->
-            lhttpc_sock:close(Socket, Ssl),
+            _ = lhttpc_sock:close(Socket, Ssl),
             undefined;
         ClientConnection =/= "close", ServerConnection =:= "keep-alive" ->
             Socket

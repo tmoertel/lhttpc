@@ -24,7 +24,7 @@
 %%% ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%% ----------------------------------------------------------------------------
 
-%%% @author Oscar Hellström <oscar@hellstrom.st>
+%%% @author Oscar Hellstrom <oscar@hellstrom.st>
 %%% @doc Connection manager for the HTTP client.
 %%% This gen_server is responsible for keeping track of persistent
 %%% connections to HTTP servers. The only interesting API is
@@ -166,7 +166,7 @@ find_socket({_, _, Ssl} = Dest, Pid, State) ->
     Dests = State#httpc_man.destinations,
     case dict:find(Dest, Dests) of
         {ok, [Socket | Sockets]} ->
-            lhttpc_sock:setopts(Socket, [{active, false}], Ssl),
+            ok = lhttpc_sock:setopts(Socket, [{active, false}], Ssl),
             case lhttpc_sock:controlling_process(Socket, Pid, Ssl) of
                 ok ->
                     {_, Timer} = dict:fetch(Socket, State#httpc_man.sockets),
@@ -177,7 +177,7 @@ find_socket({_, _, Ssl} = Dest, Pid, State) ->
                     },
                     {{ok, Socket}, NewState};
                 {error, badarg} -> % Pid has timed out, reuse for someone else
-                    lhttpc_sock:setopts(Socket, [{active, once}], Ssl),
+                    ok = lhttpc_sock:setopts(Socket, [{active, once}], Ssl),
                     {no_socket, State};
                 _ -> % something wrong with the socket; remove it, try again
                     find_socket(Dest, Pid, remove_socket(Socket, State))
@@ -191,7 +191,7 @@ remove_socket(Socket, State) ->
     case dict:find(Socket, State#httpc_man.sockets) of
         {ok, {{_, _, Ssl} = Dest, Timer}} ->
             cancel_timer(Timer, Socket),
-            lhttpc_sock:close(Socket, Ssl),
+            _ = lhttpc_sock:close(Socket, Ssl),
             Sockets = lists:delete(Socket, dict:fetch(Dest, Dests)),
             State#httpc_man{
                 destinations = update_dest(Dest, Sockets, Dests),
@@ -205,7 +205,7 @@ store_socket({_, _, Ssl} = Dest, Socket, State) ->
     Timeout = State#httpc_man.timeout,
     Timer = erlang:send_after(Timeout, self(), {timeout, Socket}),
     % the socket might be closed from the other side
-    lhttpc_sock:setopts(Socket, [{active, once}], Ssl),
+    ok = lhttpc_sock:setopts(Socket, [{active, once}], Ssl),
     Dests = State#httpc_man.destinations,
     Sockets = case dict:find(Dest, Dests) of
         {ok, S} -> [Socket | S];
@@ -223,7 +223,7 @@ update_dest(Destination, Sockets, Destinations) ->
 
 close_sockets(Sockets) ->
     lists:foreach(fun({Socket, {{_, _, Ssl}, Timer}}) ->
-                lhttpc_sock:close(Socket, Ssl),
+                _ = lhttpc_sock:close(Socket, Ssl),
                 erlang:cancel_timer(Timer)
         end, dict:to_list(Sockets)).
 
