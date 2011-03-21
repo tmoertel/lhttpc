@@ -37,76 +37,76 @@
         "This is a relatively long body, that we send to the client... "
         "This is a relatively long body, that we send to the client... "
         "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-            "This is a relatively long body, that we send to the client... "
-        ).
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+        "This is a relatively long body, that we send to the client... "
+    ).
 
-    test_no(N, Tests) ->
-        setelement(2, Tests,
-            setelement(4, element(2, Tests),
-                lists:nth(N, element(4, element(2, Tests))))).
+test_no(N, Tests) ->
+    setelement(2, Tests,
+        setelement(4, element(2, Tests),
+            lists:nth(N, element(4, element(2, Tests))))).
 
-    %%% Eunit setup stuff
+%%% Eunit setup stuff
 
-    start_app() ->
-        application:start(crypto),
-        application:start(public_key),
-        ok = application:start(ssl),
-        ok = lhttpc:start().
+start_app() ->
+    application:start(crypto),
+    application:start(public_key),
+    ok = application:start(ssl),
+    ok = lhttpc:start().
 
-    stop_app(_) ->
-        ok = lhttpc:stop(),
-        ok = application:stop(ssl).
+stop_app(_) ->
+    ok = lhttpc:stop(),
+    ok = application:stop(ssl).
 
 tcp_test_() ->
     {inorder, 
@@ -663,12 +663,15 @@ ssl_post() ->
 ssl_chunked() ->
     Port = start(ssl, [fun chunked_response/5, fun chunked_response_t/5]),
     URL = ssl_url(Port, "/ssl_chunked"),
-    {ok, FirstResponse} = lhttpc:request(URL, get, [], 50),
+    FirstResult = lhttpc:request(URL, get, [], 100),
+    ?assertMatch({ok, _}, FirstResult),
+    {ok, FirstResponse} = FirstResult,
     ?assertEqual({200, "OK"}, status(FirstResponse)),
     ?assertEqual(<<?DEFAULT_STRING>>, body(FirstResponse)),
     ?assertEqual("chunked", lhttpc_lib:header_value("transfer-encoding",
             headers(FirstResponse))),
-    {ok, SecondResponse} = lhttpc:request(URL, get, [], 50),
+    SecondResult = lhttpc:request(URL, get, [], 100),
+    {ok, SecondResponse} = SecondResult,
     ?assertEqual({200, "OK"}, status(SecondResponse)),
     ?assertEqual(<<"Again, great success!">>, body(SecondResponse)),
     ?assertEqual("ChUnKeD", lhttpc_lib:header_value("transfer-encoding",
