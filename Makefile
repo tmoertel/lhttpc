@@ -2,8 +2,11 @@ REBAR := ./rebar
 
 .PHONY: all doc clean test dialyzer
 
-all: compile doc
+all: deps compile doc
 
+deps:
+	$(REBAR) get-deps
+  
 compile:
 	$(REBAR) compile
 
