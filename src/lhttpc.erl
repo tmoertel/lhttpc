@@ -28,7 +28,6 @@
 %%% @doc Main interface to the lightweight http client.
 %%% See {@link request/4}, {@link request/5} and {@link request/6} functions.
 %%% @end
-%%% @type iolist() = [] | binary() | [char() | binary() | iolist()].
 -module(lhttpc).
 -behaviour(application).
 
@@ -70,8 +69,6 @@ start(_, _) ->
 stop(_) ->
     ok.
 
-%% @spec () -> ok | {error, Reason}
-%%   Reason = term()
 %% @doc
 %% Start the application.
 %% This is a helper function that will call `application:start(lhttpc)' to
@@ -85,8 +82,6 @@ stop(_) ->
 start() ->
     application:start(lhttpc).
 
-%% @spec () -> ok | {error, Reason}
-%%   Reason = term()
 %% @doc
 %% Stops the application.
 %% This is a helper function that will call `application:stop(lhttpc)'.
@@ -97,19 +92,6 @@ start() ->
 stop() ->
     application:stop(lhttpc).
 
-%% @spec (URL, Method, Hdrs, Timeout) -> Result
-%%   URL = string()
-%%   Method = string() | atom()
-%%   Hdrs = [{Header, Value}]
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
-%%   Timeout = integer() | infinity
-%%   Result = {ok, {{StatusCode, ReasonPhrase}, Hdrs, ResponseBody}}
-%%            | {error, Reason}
-%%   StatusCode = integer()
-%%   ReasonPhrase = string()
-%%   ResponseBody = binary()
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends a request without a body.
 %% Would be the same as calling {@link request/5} with an empty body,
 %% `request(URL, Method, Hdrs, [], Timeout)' or
@@ -121,20 +103,6 @@ stop() ->
 request(URL, Method, Hdrs, Timeout) ->
     request(URL, Method, Hdrs, [], Timeout, []).
 
-%% @spec (URL, Method, Hdrs, RequestBody, Timeout) -> Result
-%%   URL = string()
-%%   Method = string() | atom()
-%%   Hdrs = [{Header, Value}]
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
-%%   RequestBody = iolist()
-%%   Timeout = integer() | infinity
-%%   Result = {ok, {{StatusCode, ReasonPhrase}, Hdrs, ResponseBody}}
-%%            | {error, Reason}
-%%   StatusCode = integer()
-%%   ReasonPhrase = string()
-%%   ResponseBody = binary()
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends a request with a body.
 %% Would be the same as calling {@link request/6} with no options,
 %% `request(URL, Method, Hdrs, Body, Timeout, [])'.
@@ -145,33 +113,6 @@ request(URL, Method, Hdrs, Timeout) ->
 request(URL, Method, Hdrs, Body, Timeout) ->
     request(URL, Method, Hdrs, Body, Timeout, []).
 
-%% @spec (URL, Method, Hdrs, RequestBody, Timeout, Options) -> Result
-%%   URL = string()
-%%   Method = string() | atom()
-%%   Hdrs = [{Header, Value}]
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
-%%   RequestBody = iolist()
-%%   Timeout = integer() | infinity
-%%   Options = [Option]
-%%   Option = {connect_timeout, Milliseconds | infinity} |
-%%            {connect_options, [ConnectOptions]} |
-%%            {send_retry, integer()} |
-%%            {partial_upload, WindowSize} |
-%%            {partial_download, PartialDownloadOptions}
-%%   Milliseconds = integer()
-%%   ConnectOptions = term()
-%%   WindowSize = integer() | infinity
-%%   PartialDownloadOptions = [PartialDownloadOption]
-%%   PartialDowloadOption = {window_size, WindowSize} |
-%%                          {part_size, PartSize}
-%%   PartSize = integer() | infinity
-%%   Result = {ok, {{StatusCode, ReasonPhrase}, Hdrs, ResponseBody}} |
-%%            {ok, UploadState} | {error, Reason}
-%%   StatusCode = integer()
-%%   ReasonPhrase = string()
-%%   ResponseBody = binary()
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends a request with a body.
 %% Would be the same as calling <pre>
 %% {Host, Port, Path, Ssl} = lhttpc_lib:parse_url(URL),
@@ -188,36 +129,6 @@ request(URL, Method, Hdrs, Body, Timeout, Options) ->
     {Host, Port, Path, Ssl} = lhttpc_lib:parse_url(URL),
     request(Host, Port, Ssl, Path, Method, Hdrs, Body, Timeout, Options).
 
-%% @spec (Host, Port, Ssl, Path, Method, Hdrs, RequestBody, Timeout, Options) ->
-%%                                                                        Result
-%%   Host = string()
-%%   Port = integer()
-%%   Ssl = boolean()
-%%   Path = string()
-%%   Method = string() | atom()
-%%   Hdrs = [{Header, Value}]
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
-%%   RequestBody = iolist()
-%%   Timeout = integer() | infinity
-%%   Options = [Option]
-%%   Option = {connect_timeout, Milliseconds | infinity} |
-%%            {connect_options, [ConnectOptions]} |
-%%            {send_retry, integer()} |
-%%            {partial_upload, WindowSize} |
-%%            {partial_download, PartialDownloadOptions}
-%%   Milliseconds = integer()
-%%   WindowSize = integer()
-%%   PartialDownloadOptions = [PartialDownloadOption]
-%%   PartialDowloadOption = {window_size, WindowSize} |
-%%                          {part_size, PartSize}
-%%   PartSize = integer() | infinity
-%%   Result = {ok, {{StatusCode, ReasonPhrase}, Hdrs, ResponseBody}}
-%%          | {error, Reason}
-%%   StatusCode = integer()
-%%   ReasonPhrase = string()
-%%   ResponseBody = binary() | pid() | undefined
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends a request with a body.
 %%
 %% Instead of building and parsing URLs the target server is specified with
@@ -341,11 +252,6 @@ request(Host, Port, Ssl, Path, Method, Hdrs, Body, Timeout, Options) ->
             kill_client(Pid)
     end.
 
-%% @spec (UploadState :: UploadState, BodyPart :: BodyPart) -> Result
-%%   BodyPart = iolist() | binary()
-%%   Timeout = integer() | infinity
-%%   Result = {error, Reason} | UploadState
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends a body part to an ongoing request when
 %% `{partial_upload, WindowSize}' is used. The default timeout, `infinity'
 %% will be used. Notice that if `WindowSize' is infinity, this call will never
@@ -358,11 +264,6 @@ request(Host, Port, Ssl, Path, Method, Hdrs, Body, Timeout, Options) ->
 send_body_part({Pid, Window}, IoList) ->
     send_body_part({Pid, Window}, IoList, infinity).
 
-%% @spec (UploadState :: UploadState, BodyPart :: BodyPart, Timeout) -> Result
-%%   BodyPart = iolist() | binary()
-%%   Timeout = integer() | infinity
-%%   Result = {error, Reason} | UploadState
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends a body part to an ongoing request when
 %% `{partial_upload, WindowSize}' is used.
 %% `Timeout' is the timeout for the request in milliseconds.
@@ -413,12 +314,6 @@ send_body_part({Pid, Window}, IoList, _Timeout) when Window > 0, is_pid(Pid) ->
         {ok, {Pid, lhttpc_lib:dec(Window)}}
     end.
 
-%% @spec (UploadState :: UploadState, Trailers) -> Result
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
-%%   Result = {ok, {{StatusCode, ReasonPhrase}, Hdrs, ResponseBody}}
-%%            | {error, Reason}
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends trailers to an ongoing request when `{partial_upload,
 %% WindowSize}' is used and no `Content-Length' was specified. The default
 %% timout `infinity' will be used. Plase note that after this the request is
@@ -430,14 +325,6 @@ send_body_part({Pid, Window}, IoList, _Timeout) when Window > 0, is_pid(Pid) ->
 send_trailers({Pid, Window}, Trailers) ->
     send_trailers({Pid, Window}, Trailers, infinity).
 
-%% @spec (UploadState :: UploadState, Trailers, Timeout) -> Result
-%%   Trailers = [{Header, Value}]
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
-%%   Timeout = integer() | infinity
-%%   Result = {ok, {{StatusCode, ReasonPhrase}, Hdrs, ResponseBody}}
-%%            | {error, Reason}
-%%   Reason = connection_closed | connect_timeout | timeout
 %% @doc Sends trailers to an ongoing request when
 %% `{partial_upload, WindowSize}' is used and no `Content-Length' was
 %% specified.
@@ -457,12 +344,6 @@ send_trailers({Pid, _Window}, Trailers, Timeout)
     Pid ! {trailers, self(), Trailers},
     read_response(Pid, Timeout).
 
-%% @spec (HTTPClient :: pid()) -> Result
-%%   Result = {ok, BodyPart} | {ok, {http_eob, Trailers}}
-%%   BodyPart = binary()
-%%   Trailers = [{Header, Value}]
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
 %% @doc Reads a body part from an ongoing response when
 %% `{partial_download, PartialDownloadOptions}' is used. The default timeout,
 %% `infinity' will be used. 
@@ -473,13 +354,6 @@ send_trailers({Pid, _Window}, Trailers, Timeout)
 get_body_part(Pid) ->
     get_body_part(Pid, infinity).
 
-%% @spec (HTTPClient :: pid(), Timeout:: Timeout) -> Result
-%%   Timeout = integer() | infinity
-%%   Result = {ok, BodyPart} | {ok, {http_eob, Trailers}}
-%%   BodyPart = binary()
-%%   Trailers = [{Header, Value}]
-%%   Header = string() | binary() | atom()
-%%   Value = string() | binary()
 %% @doc Reads a body part from an ongoing response when
 %% `{partial_download, PartialDownloadOptions}' is used.
 %% `Timeout' is the timeout for reading the next body part in milliseconds. 

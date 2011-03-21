@@ -44,14 +44,6 @@
 
 -include("lhttpc_types.hrl").
 
-%% @spec (Host, Port, Options, Timeout, SslFlag) -> {ok, Socket} | {error, Reason}
-%%   Host = string() | ip_address()
-%%   Port = integer()
-%%   Options = [{atom(), term()} | atom()]
-%%   Timeout = infinity | integer()
-%%   SslFlag = boolean()
-%%   Socket = socket()
-%%   Reason = atom()
 %% @doc
 %% Connects to `Host' and `Port'.
 %% Will use the `ssl' module if `SslFlag' is `true' and gen_tcp otherwise.
@@ -64,12 +56,6 @@ connect(Host, Port, Options, Timeout, true) ->
 connect(Host, Port, Options, Timeout, false) ->
     gen_tcp:connect(Host, Port, Options, Timeout).
 
-%% @spec (Socket, SslFlag) -> {ok, Data} | {error, Reason}
-%%   Socket = socket()
-%%   Length = integer()
-%%   SslFlag = boolean()
-%%   Data = term()
-%%   Reason = atom()
 %% @doc
 %% Reads available bytes from `Socket'.
 %% Will block untill data is available on the socket and return the first
@@ -82,12 +68,6 @@ recv(Socket, true) ->
 recv(Socket, false) ->
     gen_tcp:recv(Socket, 0).
 
-%% @spec (Socket, Length, SslFlag) -> {ok, Data} | {error, Reason}
-%%   Socket = socket()
-%%   Length = integer()
-%%   SslFlag = boolean()
-%%   Data = term()
-%%   Reason = atom()
 %% @doc
 %% Receives `Length' bytes from `Socket'.
 %% Will block untill `Length' bytes is available.
@@ -100,11 +80,6 @@ recv(Socket, Length, true) ->
 recv(Socket, Length, false) ->
     gen_tcp:recv(Socket, Length).
 
-%% @spec (Socket, Data, SslFlag) -> ok | {error, Reason}
-%%   Socket = socket()
-%%   Data = iolist()
-%%   SslFlag = boolean()
-%%   Reason = atom()
 %% @doc
 %% Sends data on a socket.
 %% Will use the `ssl' module if `SslFlag' is set to `true', otherwise the
@@ -116,11 +91,6 @@ send(Socket, Request, true) ->
 send(Socket, Request, false) ->
     gen_tcp:send(Socket, Request).
 
-%% @spec (Socket, Pid, SslFlag) -> ok | {error, Reason}
-%%   Socket = socket()
-%%   Pid = pid()
-%%   SslFlag = boolean()
-%%   Reason = atom()
 %% @doc
 %% Sets the controlling proces for the `Socket'.
 %% @end
@@ -131,11 +101,6 @@ controlling_process(Socket, Pid, true) ->
 controlling_process(Socket, Pid, false) ->
     gen_tcp:controlling_process(Socket, Pid).
 
-%% @spec (Socket, Options, SslFlag) -> ok | {error, Reason}
-%%   Socket = socket()
-%%   Options = [atom() | {atom(), term()}]
-%%   SslFlag = boolean()
-%%   Reason = atom()
 %% @doc
 %% Sets options for a socket. Look in `inet:setopts/2' for more info.
 %% @end
@@ -146,10 +111,6 @@ setopts(Socket, Options, true) ->
 setopts(Socket, Options, false) ->
     inet:setopts(Socket, Options).
 
-%% @spec (Socket, SslFlag) -> ok | {error, Reason}
-%%   Socket = socket()
-%%   SslFlag = boolean()
-%%   Reason = atom()
 %% @doc
 %% Closes a socket.
 %% @end

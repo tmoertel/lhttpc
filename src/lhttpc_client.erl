@@ -30,7 +30,6 @@
 %%% This module implements the HTTP request handling. This should normally
 %%% not be called directly since it should be spawned by the lhttpc module.
 %%% @end
-%%% @type iolist() = [] | binary() | [char() | binary() | iolist()].
 -module(lhttpc_client).
 
 -export([request/9]).
@@ -64,18 +63,6 @@
 
 -spec request(pid(), string(), 1..65535, true | false, string(),
         string() | atom(), headers(), iolist(), [option()]) -> no_return().
-%% @spec (From, Host, Port, Ssl, Path, Method, Hdrs, RequestBody, Options) -> ok
-%%    From = pid()
-%%    Host = string()
-%%    Port = integer()
-%%    Ssl = boolean()
-%%    Method = atom() | string()
-%%    Hdrs = [Header]
-%%    Header = {string() | atom(), string()}
-%%    Body = iolist()
-%%    Options = [Option]
-%%    Option = {connect_timeout, Milliseconds}
-%% @end
 request(From, Host, Port, Ssl, Path, Method, Hdrs, Body, Options) ->
     Result = try
         execute(From, Host, Port, Ssl, Path, Method, Hdrs, Body, Options)
